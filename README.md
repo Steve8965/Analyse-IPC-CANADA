@@ -37,5 +37,7 @@ Période : 2015 – 2025
 
 ## Auteur/Contact
 Orly Steve Ngayap Tchouamdjou
+
 Projet personnel réalisé pour finalisation de mon programme cours en sciences des données à la TÉLUQ
+
 Courriel : sngayap50@gmail.com
