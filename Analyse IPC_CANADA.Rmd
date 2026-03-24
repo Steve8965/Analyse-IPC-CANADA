@@ -1,0 +1,93 @@
+---
+title: "Analyse IPC_CANADA"
+output: html_document
+date: "2026-03-24"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## I. Analyse descriptive
+```{r}
+library(readxl)
+# 1. Chargement des données
+ipc <- read_excel("IPC_Canada_Donnees_Traitees.xlsx", sheet = "IPC")
+
+# 2.Vérification de la structure des données
+str(ipc)
+
+# 3. Affichage des premières lignes
+head(ipc)
+
+# 4. Résumé statistique global
+summary(ipc[, -1])
+```
+
+## II. Visualisation de l'IPC global
+```{r}
+library(ggplot2)
+
+ggplot(ipc, aes(x = Année, y = Ensemble)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_x_continuous(breaks = ipc$Année) +
+  labs(title = "Évolution de l'IPC global au Canada", 
+       x = "Année", y = "IPC global (Ensemble)") +
+  theme_minimal()
+```
+
+## III. Comparaison des composantes de l'IPC
+```{r}
+library(tidyr)
+
+# 1. Transformation en format long (graphique multi-lignes)
+ipc_long <- pivot_longer(ipc, cols = -Année,
+                         names_to = "Composantes",
+                         values_to = "IPC")
+
+# 2. Graphique
+ggplot(ipc_long, aes(x = Année, y = IPC, color = Composantes)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_x_continuous(breaks = ipc_long$Année) +
+  labs(title = "Évolution des composantes de l'IPC au Canada",
+       x = "Année", y = "Indice des prix") + theme_minimal()
+```
+
+## IV. Analyse de corrélation
+```{r}
+library(knitr)
+# 1. Matrice de corrélation (sans année)
+cor_matrix <- cor(ipc[, -1])
+
+# 2. Affichage
+kable(cor_matrix, digits = 3, caption = "Matrice de corrélation")
+```
+
+## V. Modélisation par régression
+```{r}
+# 1. Modèle de régression
+modele <- lm(Ensemble ~ Logement + Aliments, data = ipc)
+
+# 2. Résultats
+summary(modele)
+
+# 3. Vérification
+library(car)
+vif(modele)
+```
+
+## VI. Prédiction de l'IPC global pour 2026
+```{r}
+# 1. Modèle de prédiction simple
+modele_pred <- lm(Ensemble ~ Logement, data = ipc)
+
+# 2. Résumé du modèle
+summary(modele_pred)
+
+# 3. Prédictions pour 2026
+prediction_2026 <- predict(modele_pred, newdata = data.frame(Logement = 192))
+prediction_2026
+```
+
