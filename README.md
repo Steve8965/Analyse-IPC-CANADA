@@ -11,7 +11,7 @@ Ce projet analyse l’évolution de l’Indice des prix à la consommation (IPC)
 - Réaliser une prédiction simple
 
 ## Données
-Source : Statistique Canada  
+Source : Statistique Canada (https://www.statcan.gc.ca/fr/debut)  
 Période : 2015 – 2025  
 
 ## Méthodologie
@@ -35,5 +35,7 @@ Période : 2015 – 2025
 - Images
 - Présentation PowerPoint
 
-## Auteur
-Steve Ngayap
+## Auteur/Contact
+Orly Steve Ngayap Tchouamdjou
+Projet personnel réalisé pour finalisation de mon programme cours en sciences des données à la TÉLUQ
+Courriel : sngayap50@gmail.com
